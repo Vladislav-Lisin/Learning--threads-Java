@@ -1,3 +1,6 @@
+import SleepAndJoin.SummingNumbersRunner;
+import SleepAndJoin.TaskSummingNumber;
+
 import static java.lang.Thread.currentThread;
 
 public class Main {
@@ -11,28 +14,8 @@ public class Main {
 
 
     public static void main(String[] args)  throws InterruptedException {
-        final TaskSummingNumber firstTask =  new TaskSummingNumber(FIRST_START_NUMBER, FIRST_END_NUMBER);
-        final TaskSummingNumber secondTask = new TaskSummingNumber(SECOND_START_NUMBER, SECOND_END_NUMBER);
-        Thread firstThread = new Thread(firstTask);
-        Thread secondThread = new Thread(secondTask);
-        firstThread.start();
-        secondThread.start();
-
-        waitForTasksFinished(firstThread, secondThread);
-        final int resultNumber = firstTask.getSum() + secondTask.getSum();
-        System.out.printf(TEMPLATE_MESSAGE_THREAD_NAME_AND_NUMBER, currentThread().getName(), resultNumber);
+        SummingNumbersRunner runner = new SummingNumbersRunner();
+        runner.run();
     }
-
-//    public static void startThread(final Runnable runnable){
-//        Thread thread = new Thread(runnable);
-//        thread.start();
-//    }
-
-    public static void waitForTasksFinished(final Thread... threads) throws InterruptedException{
-        for (Thread thread : threads) {
-            thread.join();
-        }
-    }
-
 }
 
